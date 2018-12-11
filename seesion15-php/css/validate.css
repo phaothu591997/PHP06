@@ -1,0 +1,62 @@
+#container{
+	width: 100%;
+	height: auto;
+}
+#form{
+	width: 500px;
+	height: auto;
+	border: 1px solid red;
+	margin: 5px 0px 0px 449px;
+	padding: 3px 0px 24px 139px;
+}
+#title-form{
+	text-align: center;
+}
+#btn1{
+	margin: 0px 0px 0px 38px;
+}
+#btn2{
+	margin: 0px 0px 0px 9px;
+}
+#btn3{
+	margin: 0px 0px 0px 17px;
+}
+.btn{
+	width: 196px;
+	padding: 9px 0px;
+}
+#err{
+	color: blue	;
+    text-align: center;
+    margin: 3px 0px 3px 80px;
+    font-size: 16px;
+    height: auto;
+}
+.error{
+    text-align: center;
+    color: red;
+    padding: 0px 0px 0px 4px;
+}
+.error1{
+	 margin: 1px 0px 0px 47px;
+	 color: red;
+	 text-align: right; 
+}
+#register{
+	padding: 10px 23px;
+    color: white;
+    margin: 0px 0px 0px 148px;
+    background-color: #333;
+}
+#list_user{
+	text-decoration: none;
+    border: 1px solid #333;
+  	padding: 8px 2px;
+    background: #333;
+    color: white;
+    margin: 1px 0px 0px 67px;
+}
+#list_user:hover{
+	opacity: 0.8;
+	margin-top: 3px 0px 0px 0px 67px;
+}
