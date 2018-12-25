@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> list-admin</title>
+  <title> edit-admin</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -24,6 +24,7 @@
     .error{
       color: red;
     }
+    
   </style>
  </head>
 <body class="hold-transition skin-blue layout-boxed sidebar-mini">
@@ -103,48 +104,124 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <section class="content">
-      <?php include('inc/myconnect.php'); ?>
-      <table>
-        <thead>
-          <tr> 
-            <th> ID         </th>
-            <th> Name       </th>
-            <th> Description</th>
-            <th> Price      </th>
-            <th> Img      </th>
-            <th> Status     </th>
-            <th colspan="2"> Action  </th>
-          <tr>
-        </thead>       
-        <tbody>
-        <?php 
-          $sql=" SELECT id,name_product, description_product, price_product, img_product,status FROM products";
-          $result = mysqli_query($conn, $sql);
-          if(!$result ){
-            die("Không thể thực hiện câu lệnh SQL: " .  mysqli_connect_error($sql));
-              exit();
+      <div class="row">
+          <?php 
+        include('inc/myconnect.php');
+        $id = $_GET['id'];
+        $name = $description = $price = $image = $status = '';
+        $err = $errorName = $errorDescription = $errorPrice = $errorImage = $errorStatus = '';
+        if(isset($_POST['edit_product'])){
+          $name        = $_POST['name'];
+          $description = $_POST['description'];
+          $price       = $_POST['price'];
+          $status      = $_POST['status'];
+          if (!$_FILES['image']['error']) {
+              $image = $_FILES['image'];
+              $imageName   = uniqid().'_'.$image['name'];
+              $targetUpload = 'uploads/'.$imageName;
+              move_uploaded_file($image['tmp_name'], $targetUpload);
+         }
+          if(empty($name)||empty($description)||empty($price)||empty($status)){
+            $err ="xin vui lòng nhập đầy đủ thông tin";
+            if(empty($name)){
+              $errorName =" Enter your name product ";
+            }
+            if(empty($description)){
+              $errorDescription =" Enter your description product ";
+            }
+            if(empty($price)){
+              $errorPrice =" Enter your price product ";
+            }
+            if(empty($status)){
+              $errorStatus =" Enter your price status ";
+            }
           }
-          while ($row = $result->fetch_array()) { ?>
-            <tr>
-              <td>  <?php echo $row['id']; ?> </td>
-              <td>  <?php echo $row['name_product']; ?> </td>
-              <td>  <?php echo $row['description_product']; ?> </td>
-              <td>  <?php echo $row['price_product']; ?> </td>
-              <td class="table-img">  <img src="<?php echo 'uploads/'.$row['img_product']; ?>"> </td>
-              <td> <?php echo $row['status']?"Con hang":"Het hang"; ?> </td>
-              <td> 
-                <a href="edit_product.php?id=<?php echo $row['id']; ?>" class="button-table"> Edit </a> 
-              </td>
-              <td> 
-                  <a href="delete_product.php?id=<?php echo $row['id'];?>" class="button-table"
-                     onclick="return confirm('bạn có muốn xóa không?')"> Delete </a>
-              </td>
-            </tr>
-             <?php  } ?>
-        </tbody>    
-       
-       </table>
-          <button class="add"> <a href="index.php"> Thêm Sản Phẩm </a></button>
+          else{
+            $sql ="UPDATE products 
+              SET name_product ='".$name."',
+                  description_product = '".$description."',
+                  price_product = '".$price."',
+                  img_product = '".$imageName."',
+                  status = '".$status."'
+              WHERE id ='".$id."'";
+            // Var_dump($sql); exit();
+            $result = mysqli_query($conn, $sql);
+            // Var_dump($result); exit();
+            if($result){
+             $err ="sửa thành công";
+              echo "<script> window.location = 'list_product.php'; </script>";
+            }
+            else{
+              echo "Add không thành công".$sql. "</br>".mysqli_error($result);
+            }
+            mysqli_close($conn);
+          }
+        }
+        $sql_id = "SELECT name_product, description_product, price_product,img_product,status 
+            FROM products WHERE id = '".$id."'";
+        $result_id = mysqli_query($conn,$sql_id);
+        if($result_id){
+          list($name,$description,$price,$image,$status)=mysqli_fetch_array($result_id,MYSQLI_NUM);
+        }
+
+        else{
+          echo"id không đúng".$sql_id."</br>" .mysqli_error($result_id);
+        }  
+    ?>  
+      </div>
+    <div class="col-md-6">  
+  <div class="box box-primary">
+      <div class="box-header with-border">
+          <h3 class="box-title"> EDIT PRODUCT : <?php echo $err; ?> </h3>
+      </div>
+      <form role="form" action="" method="POST" enctype="multipart/form-data">
+          <div class="box-body">
+              <div class="form-group">
+                  <label for="exampleInputEmail1"> name product : </label>
+                  <input type="text" name="name" class="form-control" id="exampleInputEmail1"
+                    value="<?php echo $name; ?>"  >
+                  <span class="error"> <?php  echo $errorName; ?>   </span>
+              </div>
+
+               <div class="form-group">
+                  <label for="exampleInputEmail1">  description product :</label>
+                  <input type="text"class="form-control" id="exampleInputEmail1" name="description" 
+                      value="<?php echo $description; ?>"
+                  <span class="error">  <?php  echo $errorDescription; ?> </span>
+              </div>
+
+              <div class="form-group">
+                  <label for="exampleInputEmail1"> price product :</label>
+                  <input type="text"class="form-control" id="exampleInputEmail" name="price"
+                     value="<?php echo $price; ?>">
+                  <span class="error">  <?php  echo $errorPrice; ?> </span>
+              </div>
+
+              <div class="form-group">
+                  <label for="exampleInputFile"> image product:</label>
+
+                  <img src="<?php echo 'uploads/'.$image; ?>">
+                  <input type="file" id="exampleInputFile" name="image">
+
+                   <span class="error"> <?php  echo $errorImage;?>   </span>
+             </div>
+              <div class="form-group">
+                
+                <label for="exampleInputFile">Status:</label>
+            <input type="radio" name="status" value="1" <?php if($status == '1'){ echo 'checked';} ?>> Yes
+            <input type="radio" name="status" value="2" <?php if($status == '2'){ echo 'checked';} ?>> No 
+            <span class="error"> <?php  echo $errorStatus;?>   </span>
+              </div>
+          </div>
+           <!-- /.box-body -->
+          <div class="box-footer">
+              <button type="submit" class="btn btn-primary" name="edit_product" value="Edit product">
+                 edit
+              </button>
+          </div>
+       </form>
+  </div>    
+</div>
     </section>
     
   </div>
@@ -364,7 +441,7 @@
 <!-- AdminLTE App -->
 <script src="js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="/js/demo.js"></script>
+<script src="js/demo.js"></script>
 </body>
 </html>
 

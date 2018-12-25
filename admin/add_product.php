@@ -7,7 +7,7 @@
 				$name        = $_POST['name'];
 				$description = $_POST['description'];
 				$price       = $_POST['price'];
-				$image       = $_FILES['image'];
+				$image       = $_FILES['image'];	
 				$status      = $_POST['status'];
 				$imageName   = uniqid().'_'.$image['name'];	
 				$targetUpload = 'uploads/'.$imageName;
@@ -28,13 +28,13 @@
 					}
 				}
 				else{
-					$sql = "INSERT INTO products (name_product, description_product, price_product, img_product, 	 	status) VALUES ('$name', '$description',$price,'$imageName', $status)";
-					Var_dump($status); exit();
+					$sql = "INSERT INTO products (name_product, description_product, price_product, 		img_product,status) VALUES ('$name', '$description',$price,'$imageName', $status)";
 					$result = mysqli_query($conn, $sql);
 					if($result){
-						$err ="Add thành công";
-						// header("Location: list_product.php");
-					} 
+
+					 $err ="Add thành công";
+						echo "<script> window.location = 'list_product.php'; </script>";
+					}
 					else{
 						echo "Add không thành công".$sql. "</br>".mysqli_error($result);
 					}
@@ -42,7 +42,7 @@
 				}
 			}
 		?>	
-<div class="col-md-6">		
+<div class="col-md-6">	
 	<div class="box box-primary">
 	    <div class="box-header with-border">
 	        <h3 class="box-title"> ADD PRODUCT : <?php echo $err; ?> </h3>
@@ -78,8 +78,8 @@
 	          	<div class="form-group">
 	            	
 	            	<label for="exampleInputFile">Status:</label>
-						<input type="radio" name="status" value="1" <?php if($status == '1'){ echo 'checked';} ?>> Yes
-						<input type="radio" name="status" value="2" <?php if($status == '2'){ echo 'checked';} ?>> No 
+						<input type="radio" name="status" value="1" <?php if($status == '0'){ echo 'checked';} ?>> Yes
+						<input type="radio" name="status" value="2" <?php if($status == '1'){ echo 'checked';} ?>> No 
 						<span class="error"> <?php  echo $errorStatus;?>   </span>
 	            </div>
 	        </div>

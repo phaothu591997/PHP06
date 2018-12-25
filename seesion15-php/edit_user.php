@@ -8,9 +8,9 @@
 <body>
 	<div id="container">
 		<?php 
-			
 			include('inc/myconnect.php');
 				$id=$_GET['id'];
+				
 				$name = $username = $password = $gender = $city ='';
 				$err = $errorName = $errorUserName = $errorPassword =$errorGender = $errorCity= '';
 			if(isset($_POST['edit'])){
@@ -19,7 +19,7 @@
 				$password = $_POST['password'];
 				$gender = isset($_POST['gender'])?$_POST['gender']:'';
 				$city = isset($_POST['city'])?$_POST['city']:'';
-				if(empty($_POST['name'])|| empty($_POST['username'])|| empty($_POST['password'])){
+				if(empty($name)|| empty($username)|| empty($password) || empty($gender) || empty($city)){
 					$err ="xin vui lòng điền đầy đủ thông tin";
 					if($name == ''){
 						$errorName = 'xin vui lòng nhập name';
@@ -46,25 +46,24 @@
 								city = '".$city."'
 							WHERE id ='".$id."'";
 					$result = mysqli_query($conn, $sql);
+					 Var_dump($result); exit();
 					if($result){
 						header('Location:list_user.php');
-						echo ("sửa thành công");
+						$err = "Sửa thông tin thành công";
 					}
 					else{
 						echo "erro" . $sql. "</br>" . mysqli_error($conn);
 					}
-							
-					$err = "Sửa thông tin thành công";
 				}
 			}
 			$sql_id = "SELECT name,username,password,gender,city FROM register WHERE id = '".$id."'";
-			$result_id = mysqli_query($conn,$sql_id);
-			if($result_id){
-				list($name,$username,$password,$gender,$city)=mysqli_fetch_array($result_id,MYSQLI_NUM);
-			}
-			else{
-				echo"id không đúng".$sql_id."</br>" .mysqli_error($result_id);
-			}
+				$result_id = mysqli_query($conn,$sql_id);
+				if($result_id){
+					list($name,$username,$password,$gender,$city)=mysqli_fetch_array($result_id,MYSQLI_NUM);
+				}
+				else{
+					echo"id không đúng".$sql_id."</br>" .mysqli_error($result_id);
+				}
 		?>
 		<form action="#" method="POST" id="form">
 			<h1 id="title-form"> From Edit </h1>
@@ -98,9 +97,7 @@
 				</select>
 				<span class="error1"><?php echo $errorCity;?></span>
 			</p>
-
 			<input type="submit" name="edit" value="Edit" id="register">
-			<!-- <a href="list_user.php" id="list_user"> Danh sách thành viên </a> -->
 		</form>
 	</div>
 </body>

@@ -1,12 +1,33 @@
 table {
-	width: 80%;
+	width: 100%;
 	border-collapse: collapse;
 	margin: 0 auto;
 }	
 table, th, td {
   border: 1px solid black;
+  text-align: center;
 }
-table{
-	  width: 80%;
-    margin: 0 auto;
+.table-img{
+	width: 200px;
+}
+.button-table{
+	background-color: #00c0ef;
+    padding: 5px 24px;
+    border-radius: 10px;
+    color: white;
+}
+.button-table:hover{
+	opacity: 0.9;
+	margin-top: 2px;
+	color: #3333;
+}
+img{
+  max-width: 100%;
+  height: auto;
+}
+.add{
+    background: #333;
+    padding: 10px 10px;
+    border-radius: 10px;
+    margin: 20px 0px 0px 10px;
 }

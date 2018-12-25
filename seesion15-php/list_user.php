@@ -23,7 +23,7 @@
 					$sql = "SELECT id, name, username, gender, city From register";
 					$result = mysqli_query($conn, $sql);
 					if(!$result ){
-						die("Không thể thực hiện câu lệnh SQL: " .  mysqli_connect_error($result));
+						die("Không thể thực hiện câu lệnh SQL: " .  mysqli_connect_error($sql));
     					exit();
 					}
 					while ($row = $result->fetch_array()) { ?>
