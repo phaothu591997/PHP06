@@ -1,4 +1,4 @@
-<?php include("inc/myconnect.php") ?>
+<?php include("inc/myconnect.php"); ?>
 <?php 
 	$id=$_GET['id'];
 	$sql = "DELETE FROM register WHERE id =$id";
