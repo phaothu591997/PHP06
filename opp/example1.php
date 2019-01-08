@@ -24,11 +24,6 @@
 
 
 	class Customer extends User{
-		var $name;
-		var $email;
-		var $password;
-		var $phone;
-		var $addrees;
 		var $addreesGh;
 		var $idKH;
 		function payCustomer(){
