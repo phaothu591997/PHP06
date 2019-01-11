@@ -3,7 +3,4 @@
 	if(!$conn){
 		 die("Kết nối thất bại: " . mysqli_connect_error());
 	}
-	else{
-		echo"kết nối thành công";
-	}
 ?>

@@ -1,20 +1,20 @@
 <?php
 	class User{
-		var $name;
-		var $email;
-		var $password;
-		var $phone;
-		var $addrees;
+		public $name;
+		public $email;
+		public $password;
+		public $phone;
+		public $addrees;
 		private function addUser(){
 			echo "add";
 		}
-		function editUser(){
+		public function editUser(){
 			echo "edit";
 		}
-		function registerUser(){
+		public function registerUser(){
 			echo "register";
 		}
-		function viewUser(){
+		public function viewUser(){
 			echo "view";
 		}
 		private function listUser(){
@@ -24,12 +24,12 @@
 
 
 	class Customer extends User{
-		var $addreesGh;
-		var $idKH;
-		function payCustomer(){
+		public $addreesGh;
+		public $idKH;
+		public function payCustomer(){
 			echo "pay";
 		}
-		function politeCustomer(){
+		public function politeCustomer(){
 			echo "polite";
 		}
 		
